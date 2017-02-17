@@ -2,8 +2,127 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+//Estrutura para controle de nome e cadastro dos alunos, professores e das diciplinas
+struct aluno{
+	char nome[20];
+	int ra;
+	int diciplinas[10];
+};
+
+struct professor{
+	char nome[20];
+	int ra;
+	int diciplinas[10];
+};
+
+struct diciplinas{
+	char nome[50];
+	int id;
+	int alunos[10];
+	int professores[10];
+};
+
+//Procedimento para menu principal (cadastro, visualizar,..)
+void menuPrincipal();
+
+//Procedimento para menu de cadastro
+void menuCadastro();
+
+//Procedimento para menu de consulta
+void menuConsulta();
+
+//Procedimento para menu de cancelamento
+void menuCancel();
+
+//Cadastrar o(s) aluno(s)
+void cadastroAluno();
+
+//Cadastrar o(s) prof(es)
+void cadastroProf();
+
+//Cadastrar o(s) dic(s)
+void cadastroDiciplina();
+
 
 void main(){
+	//Muda a cor do prompt de comando
+	system("color 02");
 
+	//Chama o menu
+	menuPrincipal();
+
+	//Encerra programa
 	system("pause");
+}
+
+void menuPrincipal(){
+	int opcao = 0;
+
+	while (opcao != 4){
+		printf("\tMENU\n\n");
+		printf("1- Cadastro\n");
+		printf("2- Consulta\n");
+		printf("3- Cancelamento\n");
+		printf("4- Sair\n\n");
+
+		scanf("%i", &opcao);
+		system("cls");
+
+		switch (opcao){
+		case 1:
+			menuCadastro();
+			break;
+		case 2:
+			menuConsulta();
+			break;
+		case 3:
+			menuCancel();
+			break;
+		}
+
+	}
+
+}
+
+void menuCadastro(){
+	int opcao = 0;
+
+	while(opcao != 4){
+		printf("\tCADASTRO\n\n");
+		printf("1- Aluno(s)\n");
+		printf("2- Professor(es)\n");
+		printf("3- Diciplina(s)\n");
+		printf("4- Voltar\n\n");
+
+		scanf("%i", &opcao);
+		system("cls");
+
+		switch (opcao)
+		{
+		case 1:
+			cadastroAluno();
+			break;
+
+		case 2:
+			cadastroProf();
+			break;
+
+		case 3:
+			cadastroDiciplina();
+			break;
+		}
+	}
+	
+}
+
+void menuConsulta(){
+	printf("\tCONSULTE AQUI!\n");
+	system("pause");
+	system("cls");
+}
+
+void menuCancel(){
+	printf("\tCANCELE AQUI!\n");
+	system("pause");
+	system("cls");
 }

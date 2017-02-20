@@ -1,10 +1,11 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 //Estrutura para controle de nome e cadastro dos alunos, professores e das diciplinas
 struct aluno{
-	char nome[20];
+	char nome[50];
 	int ra;
 	int diciplinas[10];
 };
@@ -15,7 +16,7 @@ struct professor{
 	int diciplinas[10];
 };
 
-struct diciplinas{
+struct diciplina{
 	char nome[50];
 	int id;
 	int alunos[10];
@@ -23,10 +24,10 @@ struct diciplinas{
 };
 
 //Procedimento para menu principal (cadastro, visualizar,..)
-void menuPrincipal();
+void menuPrincipal(int *opcao);
 
 //Procedimento para menu de cadastro
-void menuCadastro();
+void menuCadastro(int *opcao);
 
 //Procedimento para menu de consulta
 void menuConsulta();
@@ -35,84 +36,132 @@ void menuConsulta();
 void menuCancel();
 
 //Cadastrar o(s) aluno(s)
-void cadastroAluno();
+void cadastroAluno(aluno *pessoa, int *continuar);
 
 //Cadastrar o(s) prof(es)
-void cadastroProf();
+void cadastroProf(professor *pessoa, int *continuar);
 
 //Cadastrar o(s) dic(s)
-void cadastroDiciplina();
+void cadastroDiciplina(diciplina *pessoa, int *continuar);
 
 
 void main(){
+	int opcao1 = 0, opcao2 = 0, continuar, i;
+	aluno alunos[10];
+	professor professores[10];
+	diciplina diciplinas[10];
+
+
 	//Muda a cor do prompt de comando
 	system("color 02");
 
-	//Chama o menu
-	menuPrincipal();
+
+	while (opcao1 != 4){
+
+		//Chama o menu
+		menuPrincipal(&opcao1);
+
+		switch (opcao1){
+
+		//CADASTRO DE ALUNOS
+		case 1:
+
+			while (opcao2 != 4){
+				menuCadastro(&opcao2);
+
+				switch (opcao2){
+
+					//Caso seja cadastro de alunos
+				case 1:
+					//Contador para o vetor de struct
+					i = 0;
+					do{
+						//Chama o proc para cadastrar
+						cadastroAluno(&alunos[i], &continuar);
+						//Incrementa contador
+						i++;
+						
+						//Loop
+					} while (continuar == 1);
+
+					break;
+
+
+					//Caso seja cadastro de professores
+				case 2:
+					//Contador para o vetor de struct
+					i = 0;
+					do{
+						//Chama proc para cadastro
+						cadastroProf(&professores[i], &continuar);
+						//+1 Contador
+						i++;
+
+						//Loop
+					} while (continuar == 1);
+					break;
+
+
+					//Caso seja cadastro de Diciplina
+				case 3:
+					//Contador para o vetor de struct
+					i = 0;
+					do{
+						//Chama pra cadastrar a diciplina
+						cadastroDiciplina(&diciplinas[i], &continuar);
+						//+1 time masculino
+						i++;
+
+						//Loop
+					} while (continuar == 1);
+					break;
+				}
+
+				//Limpa a tela para estética
+				system("cls");
+			}
+			break;
+
+		case 2:
+			menuConsulta();
+			break;
+
+		case 3:
+			menuCancel();
+			break;
+		}
+	}
+	
 
 	//Encerra programa
 	system("pause");
 }
 
-void menuPrincipal(){
-	int opcao = 0;
-
-	while (opcao != 4){
+void menuPrincipal(int *opcao){
+	
 		printf("\tMENU\n\n");
 		printf("1- Cadastro\n");
 		printf("2- Consulta\n");
 		printf("3- Cancelamento\n");
 		printf("4- Sair\n\n");
 
-		scanf("%i", &opcao);
+		scanf("%i", &*opcao);
 		system("cls");
 
-		switch (opcao){
-		case 1:
-			menuCadastro();
-			break;
-		case 2:
-			menuConsulta();
-			break;
-		case 3:
-			menuCancel();
-			break;
-		}
-
-	}
 
 }
 
-void menuCadastro(){
-	int opcao = 0;
-
-	while(opcao != 4){
+void menuCadastro(int *opcao){
+	
 		printf("\tCADASTRO\n\n");
 		printf("1- Aluno(s)\n");
 		printf("2- Professor(es)\n");
 		printf("3- Diciplina(s)\n");
 		printf("4- Voltar\n\n");
 
-		scanf("%i", &opcao);
+		scanf("%i", &*opcao);
 		system("cls");
 
-		switch (opcao)
-		{
-		case 1:
-			cadastroAluno();
-			break;
-
-		case 2:
-			cadastroProf();
-			break;
-
-		case 3:
-			cadastroDiciplina();
-			break;
-		}
-	}
-	
 }
 
 void menuConsulta(){
@@ -125,4 +174,50 @@ void menuCancel(){
 	printf("\tCANCELE AQUI!\n");
 	system("pause");
 	system("cls");
+}
+
+void cadastroAluno(aluno *pessoa, int *continuar){
+	printf("Nome: ");
+	//PEGA NOME
+	fflush(stdin);
+	gets((*pessoa).nome);
+
+	printf("RA: ");
+	//PEGA RA
+	scanf("%i", &(*pessoa).ra);
+
+
+	printf("Continuar?\n 0-Nao \t 1-Sim\n");
+	scanf("%i", &*continuar);
+
+
+}
+
+void cadastroProf(professor *pessoa, int *continuar){
+	printf("Nome: ");
+	//PEGA NOME
+	fflush(stdin);
+	gets((*pessoa).nome);
+
+	printf("RA: ");
+	//PEGA RA
+	scanf("%i", &(*pessoa).ra);
+
+
+	printf("Continuar?\n 0-Nao \t 1-Sim\n");
+	scanf("%i", &*continuar);
+}
+
+void cadastroDiciplina(diciplina *pessoa, int *continuar){
+	printf("Nome: ");
+	//PEGA NOME
+	fflush(stdin);
+	gets((*pessoa).nome);
+
+	printf("ID: ");
+	//PEGA RA
+	scanf("%i", &(*pessoa).id);
+
+	printf("Continuar?\n 0-Nao \t 1-Sim\n");
+	scanf("%i", &*continuar);
 }
